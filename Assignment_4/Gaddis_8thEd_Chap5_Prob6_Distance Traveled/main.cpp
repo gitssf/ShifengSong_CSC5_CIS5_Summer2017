@@ -39,8 +39,8 @@ int main(int argc, char** argv) {
     cout<<"Hours        Distance Traveled\n";
     cout<<"---------------------------\n";
     for (int i=1;i<=hours;i++){
-        distance=speed*hours;
-        cout<<hours<<"                  "<<distance<<endl;
+        distance=speed*i;
+        cout<<i<<"                  "<<distance<<endl;
     }
         
         
