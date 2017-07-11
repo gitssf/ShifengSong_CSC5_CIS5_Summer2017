@@ -31,17 +31,17 @@ int main(int argc, char** argv) {    //Declare variables
     }
     
     //Map inputs to 0utputs the transformed data    
-    for(int f=1;f<=floors;f++){
-              
-        cout<<"How many rooms on floor "<<f<<" ?";        
+    for(int f=1;f<=floors;f++){        
+        if (f==13) continue;  //Skip 13      
+        cout<<"How many rooms on floor "<<f<<" ? ";        
         cin>>roomsPerfloor;
         while (roomsPerfloor<10){    
                   cout<<"Do not accept a number less than 10 for the ";
                   cout<<"number of rooms on a floor.\n";
                   cout<<"How many rooms on the floor? "; 
-                  cin>>roomsPerfloor;
+                  cin>>roomsPerfloor;        
         }     
-        cout<<"How many rooms are occupied on floor "<<f<<" ?";
+        cout<<"How many rooms are occupied on floor "<<f<<" ? ";
         cin>>peroccuRooms;
         totRooms+=roomsPerfloor;
         totoccuRooms+=peroccuRooms;
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {    //Declare variables
     cout<<"The hotel has "<<totRooms<<" rooms."<<endl;
     cout<<"There are "<<totoccuRooms<<" rooms that were occupied.\n";
     cout<<"There are "<<totunoccuRooms<<" rooms that were not occupied.\n";
-    cout<<"The percentage of rooms that are occupied is "<<prcOccuRooms<<"%.\n";
+    cout<<"The percentage of rooms occupied is "<<prcOccuRooms<<"%.\n";
     
     //Exit stage right!
     return 0;
