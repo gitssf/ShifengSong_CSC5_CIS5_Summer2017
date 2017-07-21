@@ -18,13 +18,16 @@ using namespace std; //Name-space under which system libraries exist
 const int maxCardNum  = 52; // The Max number of playing cards
 int NumArray [maxCardNum];
 //Function Prototypes
-int getANumber();    //
+int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
 //Execution begins here
 int main(int argc, char** argv) {
+    //Set random seed
+    srand(static_cast<unsigned int> (time(0)));
     //Declare variables    
     int dealer[20], player[20];
+    char choice;
     
     //Input data
     player[0]=getANumber();
@@ -36,10 +39,32 @@ int main(int argc, char** argv) {
     getPokerDesc(player[0]);
     cout<<" and";
     getPokerDesc(player[1]);
+    cout<<endl;
     cout<<"The card dealer got is";
     getPokerDesc(dealer[0]);
-    
+    cout<<endl;
+    cout<<"Do you want to continue?";
+    cin>>choice;
+    cin.ignore(1024,'\n');
 
+    if(choice == 'y' || choice == 'Y') {
+       player[2]=getANumber();
+       cout<<"The card you got is";
+       getPokerDesc(player[2]);
+  }
+   
+    if(getPoint(dealer[0])+getPoint(dealer[1])>15){
+        cout<<"The point dealer got is ";
+        cout<<getPoint(dealer[0])+getPoint(dealer[1])<<".\n";
+    }
+    else {
+        cout<<"The point dealer got is ";
+        cout<<getPoint(dealer[0])+getPoint(dealer[1])+getPoint(dealer[2])<<".\n";
+    }
+            
+     cout<<"The point dealer got is ";
+     cout<<getPoint(player[0])+getPoint(player[1])+getPoint(player[2])<<".\n";
+     
     //Map inputs to outputs or process the data
     
     //Output the transformed data
