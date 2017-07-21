@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     cout<<" and";
     getPokerDesc(player[1]);
     cout<<endl;
-    cout<<"The card dealer got is";
+    cout<<"The one of two cards dealer got is";
     getPokerDesc(dealer[0]);
     cout<<endl;
     cout<<"Do you want to continue? ";
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 
     if(choice == 'y' || choice == 'Y') {
        player[2]=getANumber();
-       cout<<"The card you got is";
+       cout<<"The third card you got is";
        getPokerDesc(player[2]);
        cout<<endl;
        playerPoint=getPoint(player[0])+getPoint(player[1])+getPoint(player[2]);
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
     if(dealerPoint<=15){
         dealer[2]=getANumber();
         dealerPoint+=getPoint(dealer[2]);
-        cout<<"The card dealer got is";
+        cout<<"The third card dealer got is";
         getPokerDesc(dealer[2]);
         cout<<endl;
     }
