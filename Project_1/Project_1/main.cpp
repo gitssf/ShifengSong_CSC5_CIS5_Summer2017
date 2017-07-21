@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     player[1]=getANumber();
     dealer[1]=getANumber();
      
-    cout<<"The cards you got are";
+    cout<<"The two cards you got are";
     getPokerDesc(player[0]);
     cout<<" and";
     getPokerDesc(player[1]);
@@ -65,6 +65,7 @@ int main(int argc, char** argv) {
         dealerPoint+=getPoint(dealer[2]);
         cout<<"The card dealer got is";
         getPokerDesc(dealer[2]);
+        cout<<endl;
     }
     else 
         cout<<"The dealer did not follow. \n";
