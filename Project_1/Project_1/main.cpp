@@ -59,7 +59,6 @@ int main(int argc, char** argv) {
     }    
     
     dealerPoint=getPoint(dealer[0])+getPoint(dealer[1]);
-
     if(dealerPoint<=15){
         dealer[2]=getANumber();
         dealerPoint+=getPoint(dealer[2]);
