@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
     //Declare variables    
     int dealer[20], player[20];
     char choice;
+    int playerPoint,dealerPoint;
     
     //Input data
     player[0]=getANumber();
@@ -51,19 +52,29 @@ int main(int argc, char** argv) {
        player[2]=getANumber();
        cout<<"The card you got is";
        getPokerDesc(player[2]);
+       cout<<endl;
   }
-   
-    if(getPoint(dealer[0])+getPoint(dealer[1])>15){
+    dealerPoint=getPoint(dealer[0])+getPoint(dealer[1]);
+    if(dealerPoint>15){
         cout<<"The point dealer got is ";
-        cout<<getPoint(dealer[0])+getPoint(dealer[1])<<".\n";
+        cout<<dealerPoint<<".\n";
     }
     else {
+        dealerPoint=getPoint(dealer[0])+getPoint(dealer[1])+getPoint(dealer[2]);
         cout<<"The point dealer got is ";
-        cout<<getPoint(dealer[0])+getPoint(dealer[1])+getPoint(dealer[2])<<".\n";
+        cout<<dealerPoint<<".\n";
     }
-            
-     cout<<"The point dealer got is ";
-     cout<<getPoint(player[0])+getPoint(player[1])+getPoint(player[2])<<".\n";
+       
+     playerPoint=getPoint(player[0])+getPoint(player[1])+getPoint(player[2]);
+     cout<<"The point you got is ";
+     cout<<playerPoint<<".\n";
+     
+     if(playerPoint<=21&&dealerPoint>21)cout<<"You win!!!\n";
+     if(playerPoint>21&&dealerPoint<=21)cout<<"You lost!!!\n";
+     if(playerPoint>21&&dealerPoint>21)cout<<"You even!!!\n";
+     if(playerPoint>dealerPoint)cout<<"You win!!!\n";
+     else if(playerPoint<dealerPoint)cout<<"You lost!!!\n";
+     else if(playerPoint=dealerPoint)cout<<"You even!!!\n";
      
     //Map inputs to outputs or process the data
     
