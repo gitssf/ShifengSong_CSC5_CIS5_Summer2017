@@ -7,16 +7,14 @@
 
 //System Libraries
 #include <iostream>  //Input - Output Library
-#include <ctime>     // 
-#include <cstdlib>  //
-#include <iostream> //
+#include <ctime>     //For random seed
 using namespace std; //Name-space under which system libraries exist
 
 //User Libraries
 
 //Global Constants
 const int maxCardNum  = 52; // The Max number of playing cards
-int NumArray [maxCardNum];
+int NumArray [maxCardNum]; // Avoid repeating random numbers
 //Function Prototypes
 int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
@@ -25,12 +23,13 @@ int getPoint(int); //Transfer card points;
 int main(int argc, char** argv) {
     //Set random seed
     srand(static_cast<unsigned int> (time(0)));
+    
     //Declare variables    
     int dealer[20], player[20];
     char choice;
     int playerPoint,dealerPoint;
     
-    //Input data
+    //Map inputs to outputs the transformed data
     player[0]=getANumber();
     dealer[0]=getANumber();
     player[1]=getANumber();
@@ -44,7 +43,7 @@ int main(int argc, char** argv) {
     cout<<"The card dealer got is";
     getPokerDesc(dealer[0]);
     cout<<endl;
-    cout<<"Do you want to continue?";
+    cout<<"Do you want to continue? ";
     cin>>choice;
     cin.ignore(1024,'\n');
 
@@ -53,38 +52,41 @@ int main(int argc, char** argv) {
        cout<<"The card you got is";
        getPokerDesc(player[2]);
        cout<<endl;
+       playerPoint=getPoint(player[0])+getPoint(player[1])+getPoint(player[2]);
   }
+    else{
+        playerPoint=getPoint(player[0])+getPoint(player[1]);
+    }    
+    
     dealerPoint=getPoint(dealer[0])+getPoint(dealer[1]);
-    if(dealerPoint>15){
-        cout<<"The point dealer got is ";
-        cout<<dealerPoint<<".\n";
+
+    if(dealerPoint<=15){
+        dealer[2]=getANumber();
+        dealerPoint+=getPoint(dealer[2]);
+        cout<<"The card dealer got is";
+        getPokerDesc(dealer[2]);
     }
-    else {
-        dealerPoint=getPoint(dealer[0])+getPoint(dealer[1])+getPoint(dealer[2]);
-        cout<<"The point dealer got is ";
-        cout<<dealerPoint<<".\n";
-    }
+    else 
+        cout<<"The dealer did not follow. \n";
+    
+    cout<<"The point you got is ";
+    cout<<playerPoint<<".\n";
+
+    cout<<"The point dealer got is ";
+    cout<<dealerPoint<<".\n";
        
-     playerPoint=getPoint(player[0])+getPoint(player[1])+getPoint(player[2]);
-     cout<<"The point you got is ";
-     cout<<playerPoint<<".\n";
-     
-     if(playerPoint<=21&&dealerPoint>21)cout<<"You win!!!\n";
-     if(playerPoint>21&&dealerPoint<=21)cout<<"You lost!!!\n";
-     if(playerPoint>21&&dealerPoint>21)cout<<"You even!!!\n";
-     if(playerPoint>dealerPoint)cout<<"You win!!!\n";
-     else if(playerPoint<dealerPoint)cout<<"You lost!!!\n";
-     else if(playerPoint=dealerPoint)cout<<"You even!!!\n";
-     
-    //Map inputs to outputs or process the data
-    
-    //Output the transformed data
-    
+    if(playerPoint<=21&&dealerPoint>21)cout<<"You win!!!\n";
+    else if(playerPoint>21&&dealerPoint<=21)cout<<"You lost!!!\n";
+    else if(playerPoint>21&&dealerPoint>21)cout<<"You even!!!\n";
+    else {
+      if(playerPoint>dealerPoint)cout<<"You win!!!\n";
+      else if(playerPoint<dealerPoint)cout<<"You lost!!!\n";
+      else cout<<"You even!!!\n";
+    }
+         
     //Exit stage right!
     return 0;
 }
-
-
 
 /*
 ** get random number 1-52
@@ -122,6 +124,7 @@ int getANumber(){
 
   return ret;
 }
+
 
 /*
 ** Return card suits
