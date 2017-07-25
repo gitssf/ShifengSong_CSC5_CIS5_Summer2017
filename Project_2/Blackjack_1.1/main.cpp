@@ -1,13 +1,14 @@
 /* 
  * File:   main.cpp
  * Author: Shifeng Song
- * Created on July 17, 2017, 21:32 PM
- * Project Title:  Blackjack
+ * Created on July 25, 2017, 2:32 AM
+ * Project Title:  Blackjack_V1.1
  */
 
 //System Libraries
 #include <iostream>  //Input - Output Library
 #include <ctime>     //For random seed
+#include <fstream>
 using namespace std; //Name-space under which system libraries exist
 
 //User Libraries
@@ -19,6 +20,7 @@ int NumArray [maxCardNum]; // Avoid repeating random numbers
 int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
+int writeScoreToFile(char *, int );
 //Execution begins here
 int main(int argc, char** argv) {
     //Set random seed
@@ -27,7 +29,8 @@ int main(int argc, char** argv) {
     //Declare variables    
     int dealer[20], player[20];
     char choice;
-    int playerPoint,dealerPoint;
+    int playerPoint,dealerPoint;    
+    const char *recordfile = "scorefile";
     
     //Map inputs to outputs the transformed data
     player[0]=getANumber();
@@ -40,7 +43,7 @@ int main(int argc, char** argv) {
     cout<<" and";
     getPokerDesc(player[1]);
     cout<<endl;
-    cout<<"The one of two cards dealer got is";
+    cout<<"The one of two cards the dealer got is";
     getPokerDesc(dealer[0]);
     cout<<endl;
     cout<<"Do you want to continue? ";
@@ -86,6 +89,10 @@ int main(int argc, char** argv) {
       else if(playerPoint<dealerPoint)cout<<"You lost!!!\n";
       else cout<<"You even!!!\n";
     }
+    
+   
+
+
          
     //Exit stage right!
     return 0;
@@ -188,4 +195,23 @@ int getPoint(int num){
   }
 }
 
+/*
+** Write Score to File
+** success - return 0
+** error   - return -1
+*/
 
+int writeScoreToFile(char *recordfile, int score)
+{
+  FILE *fp;
+
+  if ((fp = fopen(recordfile, "a")) == NULL)
+	{
+		return -1;
+	}
+
+  fprintf(fp,"%d\n",score);
+  fclose(fp);
+
+  return 0;
+}
