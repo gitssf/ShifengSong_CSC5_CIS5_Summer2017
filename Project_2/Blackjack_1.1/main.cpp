@@ -62,18 +62,21 @@ int main(int argc, char** argv) {
     if(dealerPoint<=15){
         dealer[2]=getANumber();
         dealerPoint+=getPoint(dealer[2]);
-        cout<<"The third card dealer got is";
+        cout<<"The third card the dealer got is";
         getPokerDesc(dealer[2]);
         cout<<endl;
     }
     else 
         cout<<"The dealer did not follow. \n";
     
+    cout<<"The card the dealer did not show is ";
+    getPokerDesc(dealer[1]);
+    cout<<"\n\n";
     cout<<"The point you got is ";
     cout<<playerPoint<<".\n";
 
-    cout<<"The point dealer got is ";
-    cout<<dealerPoint<<".\n";
+    cout<<"The point the dealer got is ";
+    cout<<dealerPoint<<".\n\n";
        
     if(playerPoint<=21&&dealerPoint>21)cout<<"You win!!!\n";
     else if(playerPoint>21&&dealerPoint<=21)cout<<"You lost!!!\n";
