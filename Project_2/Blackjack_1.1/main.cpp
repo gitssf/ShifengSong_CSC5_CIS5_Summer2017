@@ -185,7 +185,8 @@ int getANumber()
 */
 void getPokerDesc(int num)
 {
-  const char *poker_desc[] = {"A","2","3","4","5","6","7","8","9","10","Jack","Queen","King"};
+  const char *poker_desc[] = {"A","2","3","4","5","6","7","8",
+                              "9","10","Jack","Queen","King"};
 
   if (num>0 && num<14)
     cout<<" Club "<<poker_desc[num-1];
@@ -196,7 +197,7 @@ void getPokerDesc(int num)
   else if (num>=40 && num<=52)
     cout<<" Spade "<<poker_desc[num-40];
   else
-    cout<<"ERROR!";
+    cout<<"ERROR!!!";
 }
 
 
