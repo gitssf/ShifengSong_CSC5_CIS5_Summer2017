@@ -21,6 +21,8 @@ int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
 int writeScoreToFile(char *, int );
+void savePlayerScore(int );
+int getPlayerScore();
 //Execution begins here
 int main(int argc, char** argv) {
     //Set random seed
@@ -81,28 +83,32 @@ int main(int argc, char** argv) {
     cout<<"The point the dealer got is ";
     cout<<dealerPoint<<".\n\n";
        
-    if(playerPoint<=21&&dealerPoint>21)cout<<"You win!!!\n";
-    else if(playerPoint>21&&dealerPoint<=21)cout<<"You lost!!!\n";
-    else if(playerPoint>21&&dealerPoint>21)cout<<"You even!!!\n";
-    else {
-      if(playerPoint>dealerPoint)cout<<"You win!!!\n";
-      else if(playerPoint<dealerPoint)cout<<"You lost!!!\n";
-      else cout<<"You even!!!\n";
+    if(playerPoint<=21&&dealerPoint>21){
+        cout<<"You win!!!\n";
+        savePlayerScore(1);
     }
+    else if(playerPoint>21&&dealerPoint<=21){
+        cout<<"You lost!!!\n";
+           savePlayerScore(-1);
+    }
+    else if(playerPoint>21&&dealerPoint>21){
+        cout<<"You even!!!\n";
+           savePlayerScore(0);
+    }    
+    else if(playerPoint>dealerPoint){
+          cout<<"You win!!!\n";
+         savePlayerScore(1);
+      }      
+      else if(playerPoint<dealerPoint){
+          cout<<"You lost!!!\n";
+         savePlayerScore(-1);
+      }
+      else {
+          cout<<"You even!!!\n";
+         savePlayerScore(0);
+      }
     
-    char data[100];
-    ofstream outfile;
-    outfile.open("record.dat");
-    cin>>data;    
-    outfile<<data<<endl;
-    outfile.close();
-    
-    ifstream infile;
-    infile.open("record.dat");
-    infile>>data;
-    cout<<data<<endl;
-    
-    infile.close();
+    cout<<"Your score record is "<<getPlayerScore()<<".\n";
 
 
          
@@ -226,4 +232,34 @@ int writeScoreToFile(char *recordfile, int score)
   fclose(fp);
 
   return 0;
+}
+
+
+void savePlayerScore(int score){
+  ofstream outfile;
+  outfile.open("record.dat", ios::app);
+  if(!outfile) {
+    cout<<"File Open ERROR."<<endl;
+  } else {
+    outfile << score << endl;
+    outfile.close();
+  }
+}
+
+int getPlayerScore(){
+  ifstream infile;
+  char buffer[256];
+  int score;
+
+  infile.open("record.dat", ios::in);
+  if(!infile) return 0;
+  score = 0;
+  while (!infile.eof()){
+    infile.getline(buffer,sizeof(buffer));
+    score += atoi(buffer);
+  }
+
+  infile.close();
+
+  return score;
 }
