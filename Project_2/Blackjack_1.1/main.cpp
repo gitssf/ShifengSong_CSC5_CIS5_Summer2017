@@ -23,8 +23,9 @@ int NumArray [maxCardNum]; // Avoid repeating random numbers
 int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
-void savePlayerScore(int);
-int getPlayerScore();
+void savePlayerScore(int);//Input data to a file
+int getPlayerScore();//Read data from a file
+double getWinRate(); //Get Player's Winning Rate 
 
 
 //Execution begins here
@@ -37,14 +38,14 @@ int main(int argc, char** argv)
     int dealer[20], player[20];
     char choice;
     int playerPoint,dealerPoint;
-    const char *recordfile = "scorefile";
-
-    //Map inputs to outputs the transformed data
+    
+    //Initialize some variables
     player[0]=getANumber();
     dealer[0]=getANumber();
     player[1]=getANumber();
     dealer[1]=getANumber();
-
+    
+   //Map inputs to outputs the transformed data
     cout<<"The two cards you got are";
     getPokerDesc(player[0]);
     cout<<" and";
@@ -71,8 +72,8 @@ int main(int argc, char** argv)
     }
 
     dealerPoint=getPoint(dealer[0])+getPoint(dealer[1]);
-    if(dealerPoint<=17){
-        dealer[2]=getANumber();
+    if(dealerPoint<=17){            //The dealer must be get third card 
+        dealer[2]=getANumber();     //if his points no more than 17
         dealerPoint+=getPoint(dealer[2]);
         cout<<"The third card the dealer got is";
         getPokerDesc(dealer[2]);
@@ -117,7 +118,8 @@ int main(int argc, char** argv)
       }
     }
 
-    cout<<"Your score record is "<<getPlayerScore()<<".\n";
+    cout<<"Your final score is "<<getPlayerScore()<<".\n";
+    cout<<"Your Winning Rate is "<<getWinRate()<<".\n";
 
     //Exit stage right!
     return 0;
@@ -222,9 +224,11 @@ int getPoint(int num)
   }
 }
 
+/* Input data to a file for the game's record
+ * 
+ */
 
-void savePlayerScore(int score)
-{
+void savePlayerScore(int score){
   ofstream outfile;
 
   outfile.open("record.dat", ios::app);
@@ -236,9 +240,8 @@ void savePlayerScore(int score)
   }
 }
 
-
-int getPlayerScore()
-{
+//Read data of final scores from a file
+int getPlayerScore(){
   ifstream infile;
   string buf;
   int score;
@@ -253,4 +256,29 @@ int getPlayerScore()
   infile.close();
 
   return score;
+}
+
+//Get Winning Rate by calculating all of data  
+double getWinRate(){
+  ifstream infile;
+  string buf;
+  int play, win;
+
+  infile.open("record.dat", ios::in);
+  if(!infile) return 0;
+
+  play = 0;
+  win = 0;
+  while(getline(infile,buf)) {
+    play++;
+    if (atoi(buf.c_str()) > 0) win++;
+  }
+
+  infile.close();
+
+  if (play > 0 ) {
+    return 1.0 * win / play;
+  } else {
+  	return 0;
+  }
 }
