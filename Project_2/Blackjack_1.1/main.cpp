@@ -8,7 +8,7 @@
 //System Libraries
 #include <iostream>  //Input - Output Library
 #include <ctime>     //For random seed
-#include <fstream>
+#include <fstream>  // For writing and reading file
 //#include <stdlib.h>
 
 using namespace std; //Name-space under which system libraries exist
@@ -26,7 +26,6 @@ int getPoint(int); //Transfer card points;
 void savePlayerScore(int);//Input data to a file
 int getPlayerScore();//Read data from a file
 double getWinRate(); //Get Player's Winning Rate 
-
 
 //Execution begins here
 int main(int argc, char** argv)
@@ -92,28 +91,40 @@ int main(int argc, char** argv)
     cout<<dealerPoint<<".\n\n";
 
     if(playerPoint<=21&&dealerPoint>21){
-        cout<<"You win!!!\n";
+          cout<<"**************\n";
+          cout<<"* You win!!! *\n";
+          cout<<"**************\n";
         savePlayerScore(1);
     }
     else if(playerPoint>21&&dealerPoint<=21){
-        cout<<"You lost!!!\n";
+          cout<<"***************\n";
+          cout<<"* You lost!!! *\n";
+          cout<<"***************\n";
            savePlayerScore(-1);
     }
     else if(playerPoint>21&&dealerPoint>21){
-        cout<<"You even!!!\n";
+          cout<<"***************\n";
+          cout<<"* You even!!! *\n";
+          cout<<"***************\n";
            savePlayerScore(0);
     }
     else {
     	if(playerPoint>dealerPoint){
-          cout<<"You win!!!\n";
+          cout<<"**************\n";
+          cout<<"* You win!!! *\n";
+          cout<<"**************\n";
          savePlayerScore(1);
       }
       else if(playerPoint<dealerPoint){
-          cout<<"You lost!!!\n";
+          cout<<"***************\n";
+          cout<<"* You lost!!! *\n";
+          cout<<"***************\n";
          savePlayerScore(-1);
       }
       else {
-          cout<<"You even!!!\n";
+          cout<<"***************\n";
+          cout<<"* You even!!! *\n";
+          cout<<"***************\n";
          savePlayerScore(0);
       }
     }
