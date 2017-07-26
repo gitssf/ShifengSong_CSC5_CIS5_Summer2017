@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: Shifeng Song
  * Created on July 25, 2017, 2:32 AM
@@ -9,6 +9,8 @@
 #include <iostream>  //Input - Output Library
 #include <ctime>     //For random seed
 #include <fstream>
+//#include <stdlib.h>
+
 using namespace std; //Name-space under which system libraries exist
 
 //User Libraries
@@ -16,37 +18,43 @@ using namespace std; //Name-space under which system libraries exist
 //Global Constants
 const int maxCardNum  = 52; // The Max number of playing cards
 int NumArray [maxCardNum]; // Avoid repeating random numbers
+
 //Function Prototypes
 int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
-void savePlayerScore(int );//Input game records to a file
-int getPlayerScore();//Read and report the records from a file
+void savePlayerScore(int);
+int getPlayerScore();
+
+
 //Execution begins here
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     //Set random seed
     srand(static_cast<unsigned int> (time(0)));
-    
-    //Declare variables    
+
+    //Declare variables
     int dealer[20], player[20];
     char choice;
-    int playerPoint,dealerPoint;    
+    int playerPoint,dealerPoint;
     const char *recordfile = "scorefile";
-    
+
     //Map inputs to outputs the transformed data
     player[0]=getANumber();
     dealer[0]=getANumber();
     player[1]=getANumber();
     dealer[1]=getANumber();
-     
+
     cout<<"The two cards you got are";
     getPokerDesc(player[0]);
     cout<<" and";
     getPokerDesc(player[1]);
     cout<<endl;
+
     cout<<"The one of two cards the dealer got is";
     getPokerDesc(dealer[0]);
     cout<<endl;
+
     cout<<"Do you want to continue? ";
     cin>>choice;
     cin.ignore(1024,'\n');
@@ -57,23 +65,23 @@ int main(int argc, char** argv) {
        getPokerDesc(player[2]);
        cout<<endl;
        playerPoint=getPoint(player[0])+getPoint(player[1])+getPoint(player[2]);
-  }
+    }
     else{
         playerPoint=getPoint(player[0])+getPoint(player[1]);
-    }    
-    
+    }
+
     dealerPoint=getPoint(dealer[0])+getPoint(dealer[1]);
-    if(dealerPoint<=15){
+    if(dealerPoint<=17){
         dealer[2]=getANumber();
         dealerPoint+=getPoint(dealer[2]);
         cout<<"The third card the dealer got is";
         getPokerDesc(dealer[2]);
         cout<<endl;
     }
-    else 
+    else
         cout<<"The dealer did not follow. \n";
-    
-    cout<<"The card the dealer did not show is ";
+
+    cout<<"The card the dealer did not show is";
     getPokerDesc(dealer[1]);
     cout<<"\n\n";
     cout<<"The point you got is ";
@@ -81,7 +89,7 @@ int main(int argc, char** argv) {
 
     cout<<"The point the dealer got is ";
     cout<<dealerPoint<<".\n\n";
-       
+
     if(playerPoint<=21&&dealerPoint>21){
         cout<<"You win!!!\n";
         savePlayerScore(1);
@@ -93,11 +101,12 @@ int main(int argc, char** argv) {
     else if(playerPoint>21&&dealerPoint>21){
         cout<<"You even!!!\n";
            savePlayerScore(0);
-    }    
-    else if(playerPoint>dealerPoint){
+    }
+    else {
+    	if(playerPoint>dealerPoint){
           cout<<"You win!!!\n";
          savePlayerScore(1);
-      }      
+      }
       else if(playerPoint<dealerPoint){
           cout<<"You lost!!!\n";
          savePlayerScore(-1);
@@ -106,21 +115,24 @@ int main(int argc, char** argv) {
           cout<<"You even!!!\n";
          savePlayerScore(0);
       }
-    
-    cout<<"Your final score is "<<getPlayerScore( )<<".\n";
-         
+    }
+
+    cout<<"Your score record is "<<getPlayerScore()<<".\n";
+
     //Exit stage right!
     return 0;
 }
 
+
 /*
 ** get random number 1-52
-** input the numbers to getNumArr 
+** input the numbers to getNumArr
 ** if the function is called more than 52 times then return -1
 */
-int getANumber(){
+int getANumber()
+{
   int ret, offset, flag, i;
-  
+
   offset = maxCardNum;
   for (i=0; i<maxCardNum; i++) {
     if (0 == NumArray[i]) {
@@ -169,11 +181,10 @@ void getPokerDesc(int num)
   else if (num>=27 && num<40)
     cout<<" Heart "<<poker_desc[num-27];
   else if (num>=40 && num<=52)
-    cout<<" Spade "<<poker_desc[num-40]<<endl;
+    cout<<" Spade "<<poker_desc[num-40];
   else
     cout<<"ERROR!";
 }
-
 
 
 /*
@@ -183,13 +194,14 @@ void getPokerDesc(int num)
 ** 27-39 Heart A、2、3...10、J、Q、K
 ** 40-52 Spade A、2、3...10、J、Q、K
 */
-int getPoint(int num){
+int getPoint(int num)
+{
   if (num>0 && num<14) {
     if (num>10)
       return 10;
     else
      return num;
-  } 
+  }
   else if (num>=14 && num<27) {
     if (num>23)
       return 10;
@@ -210,40 +222,35 @@ int getPoint(int num){
   }
 }
 
-/*
-** Write Score to File
-** success - return 0
-** error   - return -1
-*/
 
-
-
-//Input game records to a file
-
-void savePlayerScore(int score){
+void savePlayerScore(int score)
+{
   ofstream outfile;
+
   outfile.open("record.dat", ios::app);
   if(!outfile) {
     cout<<"File Open ERROR."<<endl;
-  } 
-  else {
+  } else {
     outfile << score << endl;
     outfile.close();
   }
 }
 
-//Read and report the records from a file
-int getPlayerScore(){
+
+int getPlayerScore()
+{
   ifstream infile;
   string buf;
   int score;
+
   infile.open("record.dat", ios::in);
   if(!infile) return 0;
   score = 0;
   while(getline(infile,buf)) {
     score += atoi(buf.c_str());
   }
-  infile.close();  
+
+  infile.close();
+
   return score;
 }
-
