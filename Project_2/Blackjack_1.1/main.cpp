@@ -90,7 +90,19 @@ int main(int argc, char** argv) {
       else cout<<"You even!!!\n";
     }
     
-   
+    char data[100];
+    ofstream outfile;
+    outfile.open("record.dat");
+    cin>>data;    
+    outfile<<data<<endl;
+    outfile.close();
+    
+    ifstream infile;
+    infile.open("record.dat");
+    infile>>data;
+    cout<<data<<endl;
+    
+    infile.close();
 
 
          
