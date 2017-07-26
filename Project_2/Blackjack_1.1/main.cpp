@@ -20,16 +20,15 @@ const int maxCardNum  = 52; // The Max number of playing cards
 int NumArray [maxCardNum]; // Avoid repeating random numbers
 
 //Function Prototypes
-int getANumber();    //Get random number 1-52
-void getPokerDesc(int);//Transfer card suits
-int getPoint(int); //Transfer card points;
+int getANumber();          //Get random number 1-52
+void getPokerDesc(int);    //Transfer card suits
+int getPoint(int);         //Transfer card points;
 void savePlayerScore(int);//Input data to a file
-int getPlayerScore();//Read data from a file
-double getWinRate(); //Get Player's Winning Rate 
+int getPlayerScore();     //Read data from a file
+double getWinRate();      //Get Player's Winning Rate 
 
 //Execution begins here
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv){
     //Set random seed
     srand(static_cast<unsigned int> (time(0)));
 
@@ -183,8 +182,7 @@ int getANumber()
 ** 27-39 Heart A、2、3...10、J、Q、K
 ** 40-52 Spade A、2、3...10、J、Q、K
 */
-void getPokerDesc(int num)
-{
+void getPokerDesc(int num){
   const char *poker_desc[] = {"A","2","3","4","5","6","7","8",
                               "9","10","Jack","Queen","King"};
 
@@ -208,8 +206,7 @@ void getPokerDesc(int num)
 ** 27-39 Heart A、2、3...10、J、Q、K
 ** 40-52 Spade A、2、3...10、J、Q、K
 */
-int getPoint(int num)
-{
+int getPoint(int num){
   if (num>0 && num<14) {
     if (num>10)
       return 10;
