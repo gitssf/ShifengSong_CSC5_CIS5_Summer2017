@@ -20,9 +20,8 @@ int NumArray [maxCardNum]; // Avoid repeating random numbers
 int getANumber();    //Get random number 1-52
 void getPokerDesc(int);//Transfer card suits
 int getPoint(int); //Transfer card points;
-int writeScoreToFile(char *, int );
-void savePlayerScore(int );
-int getPlayerScore();
+void savePlayerScore(int );//Input game records to a file
+int getPlayerScore();//Read and report the records from a file
 //Execution begins here
 int main(int argc, char** argv) {
     //Set random seed
@@ -108,9 +107,7 @@ int main(int argc, char** argv) {
          savePlayerScore(0);
       }
     
-    cout<<"Your score record is "<<getPlayerScore()<<".\n";
-
-
+    cout<<"Your final score is "<<getPlayerScore( )<<".\n";
          
     //Exit stage right!
     return 0;
@@ -219,47 +216,34 @@ int getPoint(int num){
 ** error   - return -1
 */
 
-int writeScoreToFile(char *recordfile, int score)
-{
-  FILE *fp;
 
-  if ((fp = fopen(recordfile, "a")) == NULL)
-	{
-		return -1;
-	}
 
-  fprintf(fp,"%d\n",score);
-  fclose(fp);
-
-  return 0;
-}
-
+//Input game records to a file
 
 void savePlayerScore(int score){
   ofstream outfile;
   outfile.open("record.dat", ios::app);
   if(!outfile) {
     cout<<"File Open ERROR."<<endl;
-  } else {
+  } 
+  else {
     outfile << score << endl;
     outfile.close();
   }
 }
 
+//Read and report the records from a file
 int getPlayerScore(){
   ifstream infile;
-  char buffer[256];
+  string buf;
   int score;
-
   infile.open("record.dat", ios::in);
   if(!infile) return 0;
   score = 0;
-  while (!infile.eof()){
-    infile.getline(buffer,sizeof(buffer));
-    score += atoi(buffer);
+  while(getline(infile,buf)) {
+    score += atoi(buf.c_str());
   }
-
-  infile.close();
-
+  infile.close();  
   return score;
 }
+
