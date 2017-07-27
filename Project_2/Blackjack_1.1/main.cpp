@@ -11,15 +11,14 @@
 #include <cstdlib>  // For srand
 #include <fstream>  // For writing and reading file
 #include <iomanip>  // For Format
-//#include <stdlib.h>
+
 
 using namespace std; //Name-space under which system libraries exist
 
 //User Libraries
 
 //Global Constants
-const int maxCardNum  = 52; // The Max number of playing cards
-int NumArray [maxCardNum]; // Avoid repeating random numbers
+
 
 //Function Prototypes
 int  getANumber();           //Get random number 1-52
@@ -146,8 +145,9 @@ int main(int argc, char** argv){
 */
 int getANumber()
 {
-  int ret, offset, flag, i;
-
+  int ret, offset, flag, i;  
+  const int maxCardNum  = 52; // The Max number of playing cards
+  static int NumArray [maxCardNum]; // Avoid repeating random numbers
   offset = maxCardNum;
   for (i=0; i<maxCardNum; i++) {
     if (0 == NumArray[i]) {
