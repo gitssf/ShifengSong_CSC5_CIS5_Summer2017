@@ -8,7 +8,9 @@
 //System Libraries
 #include <iostream>  //Input - Output Library
 #include <ctime>     //For random seed
+#include <cstdlib>  // For srand
 #include <fstream>  // For writing and reading file
+#include <iomanip>  // For Format
 //#include <stdlib.h>
 
 using namespace std; //Name-space under which system libraries exist
@@ -20,12 +22,12 @@ const int maxCardNum  = 52; // The Max number of playing cards
 int NumArray [maxCardNum]; // Avoid repeating random numbers
 
 //Function Prototypes
-int getANumber();          //Get random number 1-52
-void getPokerDesc(int);    //Transfer card suits
-int getPoint(int);         //Transfer card points;
-void savePlayerScore(int);//Input data to a file
-int getPlayerScore();     //Read data from a file
-double getWinRate();      //Get Player's Winning Rate 
+int  getANumber();           //Get random number 1-52
+void getPokerDesc(int);     //Transfer card suits
+int  getPoint(int);         //Transfer card points
+void savePlayerScore(int); //Input data to a file
+int  getPlayerScore();     //Read data from a file
+double getWinRate();       //Get Player's Winning Rate 
 
 //Execution begins here
 int main(int argc, char** argv){
@@ -127,9 +129,10 @@ int main(int argc, char** argv){
          savePlayerScore(0);
       }
     }
-
+    
     cout<<"Your final score is "<<getPlayerScore()<<".\n";
-    cout<<"Your Winning Rate is "<<getWinRate()<<".\n";
+    cout<<"Your Winning Rate is "
+        <<setprecision(2)<<fixed<<getWinRate()<<"%.\n";
 
     //Exit stage right!
     return 0;
@@ -286,7 +289,7 @@ double getWinRate(){
   infile.close();
 
   if (play > 0 ) {
-    return 1.0 * win / play;
+    return 1.0 * win / play*100;
   } else {
   	return 0;
   }
